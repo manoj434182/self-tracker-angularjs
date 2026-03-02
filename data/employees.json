@@ -1,0 +1,57 @@
+[
+  {
+    "id": 1,
+    "name": "Alice Johnson",
+    "email": "alice.johnson@company.com",
+    "managerId": null,
+    "role": "manager",
+    "department": "Engineering",
+    "joinDate": "2019-03-15",
+    "avatar": "AJ",
+    "title": "Engineering Manager"
+  },
+  {
+    "id": 2,
+    "name": "Bob Smith",
+    "email": "bob.smith@company.com",
+    "managerId": 1,
+    "role": "employee",
+    "department": "Engineering",
+    "joinDate": "2020-06-01",
+    "avatar": "BS",
+    "title": "Senior Software Engineer"
+  },
+  {
+    "id": 3,
+    "name": "Carol Davis",
+    "email": "carol.davis@company.com",
+    "managerId": 1,
+    "role": "employee",
+    "department": "Engineering",
+    "joinDate": "2021-01-10",
+    "avatar": "CD",
+    "title": "Software Engineer"
+  },
+  {
+    "id": 4,
+    "name": "David Lee",
+    "email": "david.lee@company.com",
+    "managerId": 1,
+    "role": "employee",
+    "department": "Engineering",
+    "joinDate": "2021-08-22",
+    "avatar": "DL",
+    "title": "Junior Software Engineer"
+  },
+  {
+    "id": 5,
+    "name": "Eva Martinez",
+    "email": "eva.martinez@company.com",
+    "managerId": 1,
+    "role": "employee",
+    "department": "Engineering",
+    "joinDate": "2022-03-07",
+    "avatar": "EM",
+    "title": "Software Engineer"
+  }
+]

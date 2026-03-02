@@ -1,0 +1,123 @@
+<!-- Welcome banner -->
+<div class="flex-between mb-16">
+  <div>
+    <h2 style="font-size:22px; font-weight:800; color:#0f172a;">
+      Welcome back, {{currentUser.name}} &#128075;
+    </h2>
+    <p class="text-muted" style="margin-top:4px;">
+      Here's what's happening
+      <span ng-if="isManager"> across your team ({{teamSize}} engineers)</span>
+      <span ng-if="!isManager"> with your work today</span>.
+    </p>
+  </div>
+</div>
+
+<!-- Stat Cards -->
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-value">{{stats.totalTasks}}</div>
+    <div class="stat-label">Total Tasks</div>
+  </div>
+  <div class="stat-card green">
+    <div class="stat-value">{{stats.doneTasks}}</div>
+    <div class="stat-label">Tasks Completed</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-value">{{stats.inProgressTasks}}</div>
+    <div class="stat-label">In Progress</div>
+  </div>
+  <div class="stat-card orange">
+    <div class="stat-value">{{stats.activeGoals}}</div>
+    <div class="stat-label">Active Goals</div>
+  </div>
+  <div class="stat-card purple">
+    <div class="stat-value">{{stats.avgSkillLevel}}</div>
+    <div class="stat-label">Avg Skill Level</div>
+  </div>
+  <div class="stat-card green">
+    <div class="stat-value">{{stats.completedGoals}}</div>
+    <div class="stat-label">Goals Completed</div>
+  </div>
+</div>
+
+<!-- Bottom two-column layout -->
+<div class="two-col">
+
+  <!-- Recent Tasks -->
+  <div class="card mb-0">
+    <div class="card-header">
+      <h3>&#9989; Recent Tasks</h3>
+      <a href="#!/tasks" class="btn btn-secondary btn-sm">View All</a>
+    </div>
+    <div ng-if="recentTasks.length === 0" class="empty-state">
+      <div class="empty-state-icon">&#128203;</div>
+      <h3>No tasks yet</h3>
+      <p>Head to My Tasks to add some.</p>
+    </div>
+    <div class="table-wrap" ng-if="recentTasks.length > 0">
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Due</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="t in recentTasks">
+            <td style="max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+              {{t.title}}
+            </td>
+            <td>
+              <span class="badge badge-{{t.status}}">{{t.status}}</span>
+            </td>
+            <td>
+              <span class="badge badge-{{t.priority}}">{{t.priority}}</span>
+            </td>
+            <td class="text-muted text-sm">{{t.dueDate}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Right column: Skills + Goals -->
+  <div>
+    <!-- Top Skills -->
+    <div class="card">
+      <div class="card-header">
+        <h3>&#127775; Top Skills</h3>
+        <a href="#!/skills" class="btn btn-secondary btn-sm">View All</a>
+      </div>
+      <div ng-if="topSkills.length === 0" class="text-muted text-sm">No skills recorded yet.</div>
+      <div ng-repeat="s in topSkills" class="skill-row">
+        <div class="skill-name" title="{{s.name}}">{{s.name}}</div>
+        <div class="skill-bar-wrap">
+          <div class="skill-bar-fill" ng-style="{width: skillBarWidth(s.proficiencyLevel)}"></div>
+        </div>
+        <div class="skill-level-text">{{s.proficiencyLevel}}/5</div>
+      </div>
+    </div>
+
+    <!-- Active Goals -->
+    <div class="card mb-0">
+      <div class="card-header">
+        <h3>&#127919; Active Goals</h3>
+        <a href="#!/goals" class="btn btn-secondary btn-sm">View All</a>
+      </div>
+      <div ng-if="activeGoals.length === 0" class="text-muted text-sm">No active goals.</div>
+      <div ng-repeat="g in activeGoals" style="margin-bottom:14px;">
+        <div class="flex-between mb-8">
+          <span style="font-size:13px; font-weight:600; color:#0f172a;">{{g.title}}</span>
+          <span class="badge badge-{{g.category}}">{{g.category}}</span>
+        </div>
+        <div class="progress-wrap">
+          <div class="progress-fill" ng-style="{width: g.progress + '%'}"></div>
+        </div>
+        <div class="progress-label">{{g.progress}}% complete &bull; Due {{g.targetDate}}</div>
+      </div>
+    </div>
+  </div>
+
+</div>

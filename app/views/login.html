@@ -1,0 +1,39 @@
+<div class="login-page">
+  <div class="login-logo">&#128200;</div>
+  <div class="login-title">Self Tracker</div>
+  <div class="login-subtitle">Software Engineer Productivity Tool</div>
+
+  <!-- Role selection cards -->
+  <div class="role-cards" ng-if="!selectedRole">
+    <div class="role-card" ng-click="selectRole('manager')">
+      <div class="role-card-icon">&#128084;</div>
+      <h3>Manager</h3>
+      <p>View team progress &amp; employee stats</p>
+    </div>
+    <div class="role-card" ng-click="selectRole('employee')">
+      <div class="role-card-icon">&#128187;</div>
+      <h3>Employee</h3>
+      <p>Track your tasks, skills &amp; goals</p>
+    </div>
+  </div>
+
+  <!-- User list for chosen role -->
+  <div class="user-select-area" ng-if="selectedRole">
+    <h4>Select your account – {{selectedRole}}</h4>
+    <div
+      class="user-option"
+      ng-repeat="u in userList"
+      ng-click="loginAs(u)">
+      <div class="avatar">{{u.avatar}}</div>
+      <div class="user-option-info">
+        <strong>{{u.name}}</strong>
+        <span>{{u.title}} &bull; {{u.department}}</span>
+      </div>
+    </div>
+    <div style="margin-top:14px; text-align:center;">
+      <button class="btn btn-secondary btn-sm" ng-click="selectedRole = null; userList = []">
+        &#8592; Back
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "employeeId": 2,
+    "name": "JavaScript",
+    "category": "frontend",
+    "proficiencyLevel": 5,
+    "targetLevel": 5,
+    "lastUpdated": "2024-02-01",
+    "notes": "Expert-level. Lead JS architecture discussions."
+  },
+  {
+    "id": 2,
+    "employeeId": 2,
+    "name": "React",
+    "category": "frontend",
+    "proficiencyLevel": 4,
+    "targetLevel": 5,
+    "lastUpdated": "2024-01-20",
+    "notes": "Strong with hooks and context; exploring concurrent features."
+  },
+  {
+    "id": 3,
+    "employeeId": 2,
+    "name": "Node.js",
+    "category": "backend",
+    "proficiencyLevel": 4,
+    "targetLevel": 4,
+    "lastUpdated": "2024-01-15",
+    "notes": "Comfortable with Express, REST APIs, and async patterns."
+  },
+  {
+    "id": 4,
+    "employeeId": 2,
+    "name": "PostgreSQL",
+    "category": "backend",
+    "proficiencyLevel": 3,
+    "targetLevel": 4,
+    "lastUpdated": "2024-01-10",
+    "notes": "Proficient in queries; working on advanced indexing and optimization."
+  },
+  {
+    "id": 5,
+    "employeeId": 3,
+    "name": "Python",
+    "category": "backend",
+    "proficiencyLevel": 5,
+    "targetLevel": 5,
+    "lastUpdated": "2024-02-05",
+    "notes": "Expert. Main language for backend services."
+  },
+  {
+    "id": 6,
+    "employeeId": 3,
+    "name": "Docker",
+    "category": "devops",
+    "proficiencyLevel": 3,
+    "targetLevel": 5,
+    "lastUpdated": "2024-01-28",
+    "notes": "Can write Dockerfiles; learning multi-stage builds and orchestration."
+  },
+  {
+    "id": 7,
+    "employeeId": 3,
+    "name": "TypeScript",
+    "category": "frontend",
+    "proficiencyLevel": 4,
+    "targetLevel": 5,
+    "lastUpdated": "2024-02-10",
+    "notes": "Using TypeScript in new projects; strengthening advanced generics."
+  },
+  {
+    "id": 8,
+    "employeeId": 4,
+    "name": "Java",
+    "category": "backend",
+    "proficiencyLevel": 3,
+    "targetLevel": 4,
+    "lastUpdated": "2024-01-25",
+    "notes": "Comfortable with Spring Boot basics; learning microservices patterns."
+  },
+  {
+    "id": 9,
+    "employeeId": 4,
+    "name": "AWS",
+    "category": "devops",
+    "proficiencyLevel": 2,
+    "targetLevel": 4,
+    "lastUpdated": "2024-02-01",
+    "notes": "Familiar with EC2 and S3; studying for Solutions Architect cert."
+  },
+  {
+    "id": 10,
+    "employeeId": 5,
+    "name": "Vue.js",
+    "category": "frontend",
+    "proficiencyLevel": 4,
+    "targetLevel": 5,
+    "lastUpdated": "2024-02-08",
+    "notes": "Primary frontend framework; exploring Composition API deeply."
+  },
+  {
+    "id": 11,
+    "employeeId": 5,
+    "name": "Go",
+    "category": "backend",
+    "proficiencyLevel": 2,
+    "targetLevel": 3,
+    "lastUpdated": "2024-01-30",
+    "notes": "Learning Go for high-performance services; building a CLI tool."
+  },
+  {
+    "id": 12,
+    "employeeId": 4,
+    "name": "Communication",
+    "category": "soft-skill",
+    "proficiencyLevel": 3,
+    "targetLevel": 4,
+    "lastUpdated": "2024-02-05",
+    "notes": "Working on presenting technical topics to non-technical stakeholders."
+  }
+]

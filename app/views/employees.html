@@ -1,0 +1,95 @@
+<!-- Search bar -->
+<div class="filter-bar">
+  <label>Search:</label>
+  <input type="text" ng-model="searchText" placeholder="Name, email, or department..."
+         style="min-width:220px;" />
+  <span class="text-muted text-sm" style="margin-left:auto;">
+    {{filteredEmployees().length}} of {{employees.length}} engineers
+  </span>
+</div>
+
+<!-- Employee Table -->
+<div class="card">
+  <div class="card-header">
+    <h3>&#128101; Team Overview</h3>
+  </div>
+
+  <div ng-if="employees.length === 0" class="empty-state">
+    <div class="empty-state-icon">&#128101;</div>
+    <h3>Loading team data…</h3>
+  </div>
+
+  <div class="table-wrap" ng-if="employees.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Employee</th>
+          <th>Department</th>
+          <th>Title</th>
+          <th>Tasks Done / Total</th>
+          <th>Goals Active / Done</th>
+          <th>Avg Skill</th>
+          <th>Joined</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="emp in filteredEmployees()"
+            ng-click="viewEmployee(emp)"
+            style="cursor:pointer;">
+          <td>
+            <div class="flex-center">
+              <div class="avatar sm">{{emp.avatar}}</div>
+              <div>
+                <div style="font-weight:600; color:#0f172a;">{{emp.name}}</div>
+                <div class="text-muted text-sm">{{emp.email}}</div>
+              </div>
+            </div>
+          </td>
+          <td>{{emp.department}}</td>
+          <td class="text-muted text-sm">{{emp.title}}</td>
+          <td>
+            <span style="font-weight:700; color:#22c55e;">{{emp._stats.doneTasks}}</span>
+            <span class="text-muted"> / {{emp._stats.totalTasks}}</span>
+          </td>
+          <td>
+            <span style="font-weight:700; color:#3b82f6;">{{emp._stats.activeGoals}}</span>
+            <span class="text-muted"> / {{emp._stats.completedGoals}}</span>
+          </td>
+          <td>
+            <span class="badge badge-{{emp._stats.avgSkill >= 4 ? 'done' : emp._stats.avgSkill >= 2 ? 'in-progress' : 'todo'}}">
+              {{emp._stats.avgSkill}}
+            </span>
+          </td>
+          <td class="text-muted text-sm">{{emp.joinDate}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Employee mini cards (visual summary) -->
+<div class="employee-grid" ng-if="employees.length > 0">
+  <div class="employee-card" ng-repeat="emp in employees" ng-click="viewEmployee(emp)">
+    <div class="employee-card-header">
+      <div class="avatar">{{emp.avatar}}</div>
+      <div class="employee-card-info">
+        <h3>{{emp.name}}</h3>
+        <p>{{emp.title}}</p>
+      </div>
+    </div>
+    <div class="employee-stats">
+      <div class="emp-stat">
+        <div class="emp-stat-val">{{emp._stats.doneTasks}}</div>
+        <div class="emp-stat-lbl">Tasks Done</div>
+      </div>
+      <div class="emp-stat">
+        <div class="emp-stat-val">{{emp._stats.activeGoals}}</div>
+        <div class="emp-stat-lbl">Active Goals</div>
+      </div>
+      <div class="emp-stat">
+        <div class="emp-stat-val">{{emp._stats.avgSkill}}</div>
+        <div class="emp-stat-lbl">Avg Skill</div>
+      </div>
+    </div>
+  </div>
+</div>

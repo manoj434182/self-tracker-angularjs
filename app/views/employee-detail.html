@@ -1,0 +1,136 @@
+<!-- Back button -->
+<div class="mb-16">
+  <button class="btn btn-secondary btn-sm" ng-click="goBack()">&#8592; Back to Team Overview</button>
+</div>
+
+<!-- Employee Header -->
+<div class="card" ng-if="selectedEmployee">
+  <div class="flex-center" style="gap:18px;">
+    <div class="avatar lg">{{selectedEmployee.avatar}}</div>
+    <div>
+      <h2 style="font-size:20px; font-weight:800; color:#0f172a;">{{selectedEmployee.name}}</h2>
+      <p class="text-muted">{{selectedEmployee.title}} &bull; {{selectedEmployee.department}}</p>
+      <p class="text-sm text-muted">{{selectedEmployee.email}} &bull; Joined {{selectedEmployee.joinDate}}</p>
+    </div>
+  </div>
+
+  <!-- Quick stats -->
+  <div class="stats-grid mt-16">
+    <div class="stat-card">
+      <div class="stat-value">{{empStats.totalTasks}}</div>
+      <div class="stat-label">Total Tasks</div>
+    </div>
+    <div class="stat-card green">
+      <div class="stat-value">{{empStats.doneTasks}}</div>
+      <div class="stat-label">Tasks Done</div>
+    </div>
+    <div class="stat-card orange">
+      <div class="stat-value">{{empStats.activeGoals}}</div>
+      <div class="stat-label">Active Goals</div>
+    </div>
+    <div class="stat-card purple">
+      <div class="stat-value">{{empStats.avgSkill}}</div>
+      <div class="stat-label">Avg Skill Level</div>
+    </div>
+  </div>
+</div>
+
+<!-- Tabs -->
+<div class="tabs">
+  <button class="tab-btn" ng-class="{active: activeTab === 'tasks'}"   ng-click="setTab('tasks')">&#9989; Tasks ({{empTasks.length}})</button>
+  <button class="tab-btn" ng-class="{active: activeTab === 'skills'}"  ng-click="setTab('skills')">&#127775; Skills ({{empSkills.length}})</button>
+  <button class="tab-btn" ng-class="{active: activeTab === 'goals'}"   ng-click="setTab('goals')">&#127919; Goals ({{empGoals.length}})</button>
+</div>
+
+<!-- Tasks Tab -->
+<div ng-if="activeTab === 'tasks'">
+  <div ng-if="empTasks.length === 0" class="empty-state">
+    <div class="empty-state-icon">&#128203;</div>
+    <h3>No tasks recorded</h3>
+  </div>
+  <div class="card" ng-if="empTasks.length > 0">
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Due Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="t in empTasks">
+            <td>
+              <strong>{{t.title}}</strong>
+              <div class="text-muted text-sm" ng-if="t.description">{{t.description | limitTo:70}}…</div>
+            </td>
+            <td><span class="badge badge-{{t.category}}">{{t.category}}</span></td>
+            <td><span class="badge badge-{{t.status}}">{{t.status}}</span></td>
+            <td><span class="badge badge-{{t.priority}}">{{t.priority}}</span></td>
+            <td class="text-muted text-sm">{{t.dueDate}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Skills Tab -->
+<div ng-if="activeTab === 'skills'">
+  <div ng-if="empSkills.length === 0" class="empty-state">
+    <div class="empty-state-icon">&#127775;</div>
+    <h3>No skills recorded</h3>
+  </div>
+  <div class="skill-cards-grid" ng-if="empSkills.length > 0">
+    <div class="skill-card" ng-repeat="s in empSkills">
+      <div class="skill-card-header">
+        <h4>{{s.name}}</h4>
+        <span class="badge badge-{{s.category}}">{{s.category}}</span>
+      </div>
+      <div class="skill-levels">
+        <div class="skill-levels-label">Proficiency</div>
+        <div class="skill-dots">
+          <div ng-repeat="d in skillDots(s)"
+               class="skill-dot"
+               ng-class="{filled: d.filled}"></div>
+        </div>
+        <div class="text-sm text-muted mt-4">Level {{s.proficiencyLevel}} / 5 &bull; Target: {{s.targetLevel}}</div>
+      </div>
+      <div class="skill-notes" ng-if="s.notes">{{s.notes}}</div>
+    </div>
+  </div>
+</div>
+
+<!-- Goals Tab -->
+<div ng-if="activeTab === 'goals'">
+  <div ng-if="empGoals.length === 0" class="empty-state">
+    <div class="empty-state-icon">&#127919;</div>
+    <h3>No goals recorded</h3>
+  </div>
+  <div ng-repeat="g in empGoals">
+    <div class="goal-card">
+      <div class="goal-card-header">
+        <div>
+          <h4>{{g.title}}</h4>
+          <p ng-if="g.description">{{g.description}}</p>
+        </div>
+      </div>
+      <div class="goal-meta">
+        <span class="badge badge-{{g.status}}">{{g.status}}</span>
+        <span class="badge badge-{{g.category}}">{{g.category}}</span>
+        <span class="text-muted text-sm">&#128197; Due {{g.targetDate}}</span>
+      </div>
+      <div class="goal-progress-section">
+        <div class="goal-progress-header">
+          <span>Progress</span>
+          <strong>{{g.progress}}%</strong>
+        </div>
+        <div class="progress-wrap" style="height:10px;">
+          <div class="progress-fill" ng-style="{width: g.progress + '%'}"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
