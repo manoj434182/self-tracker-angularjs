@@ -1,0 +1,149 @@
+<!-- Alert -->
+<div class="alert alert-{{alert.type}}" ng-if="alert">{{alert.msg}}</div>
+
+<!-- Toolbar -->
+<div class="filter-bar">
+  <label>Search:</label>
+  <input type="text" ng-model="searchText" placeholder="Search skills..." style="min-width:160px;" />
+
+  <label>Category:</label>
+  <select ng-model="filterCategory">
+    <option value="all">All</option>
+    <option value="frontend">Frontend</option>
+    <option value="backend">Backend</option>
+    <option value="devops">DevOps</option>
+    <option value="soft-skill">Soft Skill</option>
+  </select>
+
+  <div style="margin-left:auto;" class="btn-group">
+    <button class="btn btn-primary btn-sm" ng-click="toggleAddForm()">
+      <span ng-if="!showAddForm">&#43; Add Skill</span>
+      <span ng-if="showAddForm">&#215; Cancel</span>
+    </button>
+    <button class="btn btn-secondary btn-sm" ng-click="exportSkills()">&#11015; Export</button>
+    <button class="btn btn-secondary btn-sm" ng-click="triggerImport()">&#11014; Import</button>
+    <input id="skillFileInput" type="file" accept=".json" style="display:none"
+           onchange="angular.element(this).scope().importSkills(this)" />
+  </div>
+</div>
+
+<!-- Add Skill Form -->
+<div class="form-section" ng-if="showAddForm">
+  <h4>&#43; New Skill</h4>
+  <div class="form-row">
+    <div class="form-group" style="flex:2; min-width:200px;">
+      <label>Skill Name *</label>
+      <input type="text" class="form-control" ng-model="newSkill.name" placeholder="e.g. TypeScript" />
+    </div>
+    <div class="form-group">
+      <label>Category</label>
+      <select class="form-control" ng-model="newSkill.category">
+        <option value="frontend">Frontend</option>
+        <option value="backend">Backend</option>
+        <option value="devops">DevOps</option>
+        <option value="soft-skill">Soft Skill</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Proficiency (1-5)</label>
+      <input type="number" class="form-control" ng-model="newSkill.proficiencyLevel" min="1" max="5" />
+    </div>
+    <div class="form-group">
+      <label>Target Level (1-5)</label>
+      <input type="number" class="form-control" ng-model="newSkill.targetLevel" min="1" max="5" />
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group w-full">
+      <label>Notes</label>
+      <textarea class="form-control" ng-model="newSkill.notes" placeholder="Optional notes"></textarea>
+    </div>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-primary" ng-click="saveNewSkill()">Save Skill</button>
+    <button class="btn btn-secondary" ng-click="toggleAddForm()">Cancel</button>
+  </div>
+</div>
+
+<!-- Skills Grid -->
+<div ng-if="filteredSkills().length === 0" class="empty-state">
+  <div class="empty-state-icon">&#127775;</div>
+  <h3>No skills found</h3>
+  <p>Add your first skill to start tracking your growth.</p>
+</div>
+
+<div class="skill-cards-grid" ng-if="filteredSkills().length > 0">
+  <div class="skill-card" ng-repeat="s in filteredSkills()">
+
+    <!-- View Mode -->
+    <div ng-if="editingId !== s.id">
+      <div class="skill-card-header">
+        <h4>{{s.name}}</h4>
+        <span class="badge badge-{{s.category}}">{{s.category}}</span>
+      </div>
+
+      <div class="skill-levels">
+        <div class="skill-levels-label">Proficiency</div>
+        <div class="skill-dots">
+          <div ng-repeat="d in skillDots(s)"
+               class="skill-dot"
+               ng-class="{filled: d.filled, target: d.target}"
+               title="Level {{$index+1}}"></div>
+        </div>
+        <div class="text-sm text-muted mt-4">
+          Level {{s.proficiencyLevel}} / 5
+          <span ng-if="s.targetLevel > s.proficiencyLevel" style="color:#f97316; margin-left:6px;">
+            &#8594; Target: {{s.targetLevel}}
+          </span>
+          <span ng-if="s.targetLevel <= s.proficiencyLevel" style="color:#22c55e; margin-left:6px;">
+            &#10003; Target reached
+          </span>
+        </div>
+      </div>
+
+      <div class="skill-notes" ng-if="s.notes">{{s.notes}}</div>
+      <div class="text-sm text-muted mt-8">Updated: {{s.lastUpdated}}</div>
+
+      <div class="btn-group mt-8">
+        <button class="btn btn-secondary btn-sm" ng-click="startEdit(s)">&#9998; Edit</button>
+        <button class="btn btn-danger btn-sm" ng-click="deleteSkill(s)">&#128465;</button>
+      </div>
+    </div>
+
+    <!-- Edit Mode -->
+    <div ng-if="editingId === s.id">
+      <div class="form-group mb-8">
+        <label>Name</label>
+        <input type="text" class="form-control" ng-model="editSkill.name" />
+      </div>
+      <div class="form-group mb-8">
+        <label>Category</label>
+        <select class="form-control" ng-model="editSkill.category">
+          <option value="frontend">Frontend</option>
+          <option value="backend">Backend</option>
+          <option value="devops">DevOps</option>
+          <option value="soft-skill">Soft Skill</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Proficiency</label>
+          <input type="number" class="form-control" ng-model="editSkill.proficiencyLevel" min="1" max="5" />
+        </div>
+        <div class="form-group">
+          <label>Target</label>
+          <input type="number" class="form-control" ng-model="editSkill.targetLevel" min="1" max="5" />
+        </div>
+      </div>
+      <div class="form-group mb-8">
+        <label>Notes</label>
+        <textarea class="form-control" ng-model="editSkill.notes"></textarea>
+      </div>
+      <div class="btn-group">
+        <button class="btn btn-success btn-sm" ng-click="saveEdit()">&#10003; Save</button>
+        <button class="btn btn-secondary btn-sm" ng-click="cancelEdit()">&#215;</button>
+      </div>
+    </div>
+
+  </div>
+</div>

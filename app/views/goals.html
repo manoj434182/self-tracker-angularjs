@@ -1,0 +1,172 @@
+<!-- Alert -->
+<div class="alert alert-{{alert.type}}" ng-if="alert">{{alert.msg}}</div>
+
+<!-- Toolbar -->
+<div class="filter-bar">
+  <label>Search:</label>
+  <input type="text" ng-model="searchText" placeholder="Search goals..." style="min-width:160px;" />
+
+  <label>Status:</label>
+  <select ng-model="filterStatus">
+    <option value="all">All</option>
+    <option value="active">Active</option>
+    <option value="completed">Completed</option>
+    <option value="paused">Paused</option>
+  </select>
+
+  <label>Category:</label>
+  <select ng-model="filterCategory">
+    <option value="all">All</option>
+    <option value="technical">Technical</option>
+    <option value="soft-skill">Soft Skill</option>
+    <option value="career">Career</option>
+    <option value="personal">Personal</option>
+  </select>
+
+  <div style="margin-left:auto;" class="btn-group">
+    <button class="btn btn-primary btn-sm" ng-click="toggleAddForm()">
+      <span ng-if="!showAddForm">&#43; Add Goal</span>
+      <span ng-if="showAddForm">&#215; Cancel</span>
+    </button>
+    <button class="btn btn-secondary btn-sm" ng-click="exportGoals()">&#11015; Export</button>
+    <button class="btn btn-secondary btn-sm" ng-click="triggerImport()">&#11014; Import</button>
+    <input id="goalFileInput" type="file" accept=".json" style="display:none"
+           onchange="angular.element(this).scope().importGoals(this)" />
+  </div>
+</div>
+
+<!-- Add Goal Form -->
+<div class="form-section" ng-if="showAddForm">
+  <h4>&#43; New Goal</h4>
+  <div class="form-row">
+    <div class="form-group" style="flex:2; min-width:240px;">
+      <label>Title *</label>
+      <input type="text" class="form-control" ng-model="newGoal.title" placeholder="Goal title" />
+    </div>
+    <div class="form-group">
+      <label>Category</label>
+      <select class="form-control" ng-model="newGoal.category">
+        <option value="technical">Technical</option>
+        <option value="soft-skill">Soft Skill</option>
+        <option value="career">Career</option>
+        <option value="personal">Personal</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Status</label>
+      <select class="form-control" ng-model="newGoal.status">
+        <option value="active">Active</option>
+        <option value="paused">Paused</option>
+        <option value="completed">Completed</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Target Date</label>
+      <input type="date" class="form-control" ng-model="newGoal.targetDate" />
+    </div>
+    <div class="form-group">
+      <label>Initial Progress (%)</label>
+      <input type="number" class="form-control" ng-model="newGoal.progress" min="0" max="100" />
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group w-full">
+      <label>Description</label>
+      <textarea class="form-control" ng-model="newGoal.description" placeholder="Describe what success looks like"></textarea>
+    </div>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-primary" ng-click="saveNewGoal()">Save Goal</button>
+    <button class="btn btn-secondary" ng-click="toggleAddForm()">Cancel</button>
+  </div>
+</div>
+
+<!-- Goals List -->
+<div ng-if="filteredGoals().length === 0" class="empty-state">
+  <div class="empty-state-icon">&#127919;</div>
+  <h3>No goals found</h3>
+  <p>Start adding goals to track your professional growth.</p>
+</div>
+
+<div ng-repeat="g in filteredGoals()">
+
+  <!-- View Mode -->
+  <div class="goal-card" ng-if="editingId !== g.id">
+    <div class="goal-card-header">
+      <div>
+        <h4>{{g.title}}</h4>
+        <p ng-if="g.description">{{g.description}}</p>
+      </div>
+      <div class="btn-group" style="flex-shrink:0;">
+        <button class="btn btn-secondary btn-sm" ng-click="startEdit(g)">&#9998;</button>
+        <button class="btn btn-danger btn-sm" ng-click="deleteGoal(g)">&#128465;</button>
+      </div>
+    </div>
+
+    <div class="goal-meta">
+      <span class="badge badge-{{g.status}}">{{g.status}}</span>
+      <span class="badge badge-{{g.category}}">{{g.category}}</span>
+      <span class="text-muted text-sm">&#128197; Due {{g.targetDate}}</span>
+    </div>
+
+    <div class="goal-progress-section">
+      <div class="goal-progress-header">
+        <span>Progress</span>
+        <strong>{{g.progress}}%</strong>
+      </div>
+      <div class="progress-wrap" style="height:10px; margin-bottom:8px;">
+        <div class="progress-fill {{progressClass(g.progress)}}"
+             ng-style="{width: g.progress + '%'}"></div>
+      </div>
+      <input type="range" min="0" max="100" ng-model="g.progress"
+             ng-change="updateProgress(g)" style="margin-top:4px;" />
+    </div>
+  </div>
+
+  <!-- Edit Mode -->
+  <div class="form-section" ng-if="editingId === g.id">
+    <h4>&#9998; Edit Goal</h4>
+    <div class="form-row">
+      <div class="form-group" style="flex:2; min-width:240px;">
+        <label>Title *</label>
+        <input type="text" class="form-control" ng-model="editGoal.title" />
+      </div>
+      <div class="form-group">
+        <label>Category</label>
+        <select class="form-control" ng-model="editGoal.category">
+          <option value="technical">Technical</option>
+          <option value="soft-skill">Soft Skill</option>
+          <option value="career">Career</option>
+          <option value="personal">Personal</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Status</label>
+        <select class="form-control" ng-model="editGoal.status">
+          <option value="active">Active</option>
+          <option value="paused">Paused</option>
+          <option value="completed">Completed</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Target Date</label>
+        <input type="date" class="form-control" ng-model="editGoal.targetDate" />
+      </div>
+      <div class="form-group">
+        <label>Progress (%)</label>
+        <input type="number" class="form-control" ng-model="editGoal.progress" min="0" max="100" />
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group w-full">
+        <label>Description</label>
+        <textarea class="form-control" ng-model="editGoal.description"></textarea>
+      </div>
+    </div>
+    <div class="btn-group">
+      <button class="btn btn-success" ng-click="saveEdit()">&#10003; Save</button>
+      <button class="btn btn-secondary" ng-click="cancelEdit()">Cancel</button>
+    </div>
+  </div>
+
+</div>

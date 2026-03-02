@@ -1,0 +1,180 @@
+<!-- Alert -->
+<div class="alert alert-{{alert.type}}" ng-if="alert">{{alert.msg}}</div>
+
+<!-- Filter Bar -->
+<div class="filter-bar">
+  <label>Search:</label>
+  <input type="text" ng-model="searchText" placeholder="Search tasks..." style="min-width:160px;" />
+
+  <label>Status:</label>
+  <select ng-model="filterStatus">
+    <option value="all">All</option>
+    <option value="todo">To Do</option>
+    <option value="in-progress">In Progress</option>
+    <option value="done">Done</option>
+  </select>
+
+  <label>Priority:</label>
+  <select ng-model="filterPriority">
+    <option value="all">All</option>
+    <option value="low">Low</option>
+    <option value="medium">Medium</option>
+    <option value="high">High</option>
+  </select>
+
+  <label>Category:</label>
+  <select ng-model="filterCategory">
+    <option value="all">All</option>
+    <option value="feature">Feature</option>
+    <option value="bug">Bug</option>
+    <option value="learning">Learning</option>
+    <option value="documentation">Documentation</option>
+  </select>
+
+  <div style="margin-left:auto;" class="btn-group">
+    <button class="btn btn-primary btn-sm" ng-click="toggleAddForm()">
+      <span ng-if="!showAddForm">&#43; Add Task</span>
+      <span ng-if="showAddForm">&#215; Cancel</span>
+    </button>
+    <button class="btn btn-secondary btn-sm" ng-click="exportTasks()">&#11015; Export</button>
+    <button class="btn btn-secondary btn-sm" ng-click="triggerImport()">&#11014; Import</button>
+    <input id="taskFileInput" type="file" accept=".json" style="display:none"
+           onchange="angular.element(this).scope().importTasks(this)" />
+  </div>
+</div>
+
+<!-- Add Task Form -->
+<div class="form-section" ng-if="showAddForm">
+  <h4>&#43; New Task</h4>
+  <div class="form-row">
+    <div class="form-group" style="flex:2; min-width:240px;">
+      <label>Title *</label>
+      <input type="text" class="form-control" ng-model="newTask.title" placeholder="Task title" />
+    </div>
+    <div class="form-group">
+      <label>Category</label>
+      <select class="form-control" ng-model="newTask.category">
+        <option value="feature">Feature</option>
+        <option value="bug">Bug</option>
+        <option value="learning">Learning</option>
+        <option value="documentation">Documentation</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Status</label>
+      <select class="form-control" ng-model="newTask.status">
+        <option value="todo">To Do</option>
+        <option value="in-progress">In Progress</option>
+        <option value="done">Done</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Priority</label>
+      <select class="form-control" ng-model="newTask.priority">
+        <option value="low">Low</option>
+        <option value="medium">Medium</option>
+        <option value="high">High</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Due Date</label>
+      <input type="date" class="form-control" ng-model="newTask.dueDate" />
+    </div>
+  </div>
+  <div class="form-row">
+    <div class="form-group w-full">
+      <label>Description</label>
+      <textarea class="form-control" ng-model="newTask.description" placeholder="Optional description"></textarea>
+    </div>
+  </div>
+  <div class="btn-group">
+    <button class="btn btn-primary" ng-click="saveNewTask()">Save Task</button>
+    <button class="btn btn-secondary" ng-click="toggleAddForm()">Cancel</button>
+  </div>
+</div>
+
+<!-- Tasks Table -->
+<div class="card">
+  <div class="card-header">
+    <h3>&#9989; Tasks ({{filteredTasks.length}})</h3>
+  </div>
+
+  <div ng-if="filteredTasks.length === 0" class="empty-state">
+    <div class="empty-state-icon">&#128203;</div>
+    <h3>No tasks found</h3>
+    <p>Try adjusting your filters or add a new task.</p>
+  </div>
+
+  <div class="table-wrap" ng-if="filteredTasks.length > 0">
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Category</th>
+          <th>Status</th>
+          <th>Priority</th>
+          <th>Due Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="t in filteredTasks" ng-class="{'editing-row': editingId === t.id}">
+
+          <!-- Normal row -->
+          <td ng-if="editingId !== t.id" style="max-width:220px;">
+            <strong>{{t.title}}</strong>
+            <div class="text-muted text-sm" ng-if="t.description">{{t.description | limitTo:60}}…</div>
+          </td>
+          <td ng-if="editingId !== t.id"><span class="badge badge-{{t.category}}">{{t.category}}</span></td>
+          <td ng-if="editingId !== t.id"><span class="badge badge-{{t.status}}">{{t.status}}</span></td>
+          <td ng-if="editingId !== t.id"><span class="badge badge-{{t.priority}}">{{t.priority}}</span></td>
+          <td ng-if="editingId !== t.id" class="text-muted text-sm">{{t.dueDate}}</td>
+          <td ng-if="editingId !== t.id">
+            <div class="btn-group">
+              <button class="btn btn-secondary btn-sm" ng-click="startEdit(t)">&#9998; Edit</button>
+              <button class="btn btn-danger btn-sm" ng-click="deleteTask(t)">&#128465;</button>
+            </div>
+          </td>
+
+          <!-- Inline edit row -->
+          <td ng-if="editingId === t.id">
+            <input type="text" class="form-control" ng-model="editTask.title" />
+            <textarea class="form-control mt-4" ng-model="editTask.description" style="min-height:50px;"></textarea>
+          </td>
+          <td ng-if="editingId === t.id">
+            <select class="form-control" ng-model="editTask.category">
+              <option value="feature">Feature</option>
+              <option value="bug">Bug</option>
+              <option value="learning">Learning</option>
+              <option value="documentation">Documentation</option>
+            </select>
+          </td>
+          <td ng-if="editingId === t.id">
+            <select class="form-control" ng-model="editTask.status">
+              <option value="todo">To Do</option>
+              <option value="in-progress">In Progress</option>
+              <option value="done">Done</option>
+            </select>
+          </td>
+          <td ng-if="editingId === t.id">
+            <select class="form-control" ng-model="editTask.priority">
+              <option value="low">Low</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          </td>
+          <td ng-if="editingId === t.id">
+            <input type="date" class="form-control" ng-model="editTask.dueDate" />
+          </td>
+          <td ng-if="editingId === t.id">
+            <div class="btn-group">
+              <button class="btn btn-success btn-sm" ng-click="saveEdit()">&#10003; Save</button>
+              <button class="btn btn-secondary btn-sm" ng-click="cancelEdit()">&#215;</button>
+            </div>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

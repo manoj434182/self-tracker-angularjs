@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "employeeId": 2,
+    "title": "Achieve AWS Solutions Architect Certification",
+    "description": "Pass the AWS SAA-C03 exam and apply cloud architecture best practices to current projects.",
+    "targetDate": "2024-06-30",
+    "progress": 40,
+    "status": "active",
+    "category": "technical"
+  },
+  {
+    "id": 2,
+    "employeeId": 2,
+    "title": "Master GraphQL",
+    "description": "Complete advanced GraphQL course, implement subscriptions, and migrate one service.",
+    "targetDate": "2024-05-15",
+    "progress": 60,
+    "status": "active",
+    "category": "technical"
+  },
+  {
+    "id": 3,
+    "employeeId": 2,
+    "title": "Give a Tech Talk",
+    "description": "Present a 30-minute tech talk on microservices patterns at the monthly engineering all-hands.",
+    "targetDate": "2024-04-20",
+    "progress": 100,
+    "status": "completed",
+    "category": "soft-skill"
+  },
+  {
+    "id": 4,
+    "employeeId": 3,
+    "title": "Learn Kubernetes",
+    "description": "Set up a production-ready K8s cluster, deploy three microservices, configure auto-scaling.",
+    "targetDate": "2024-07-01",
+    "progress": 25,
+    "status": "active",
+    "category": "technical"
+  },
+  {
+    "id": 5,
+    "employeeId": 3,
+    "title": "Become Team Lead",
+    "description": "Demonstrate leadership by leading sprint planning, mentoring a junior, and improving team velocity by 15%.",
+    "targetDate": "2024-12-31",
+    "progress": 50,
+    "status": "active",
+    "category": "career"
+  },
+  {
+    "id": 6,
+    "employeeId": 3,
+    "title": "Read 12 Technical Books",
+    "description": "Read one technical book per month to broaden knowledge in architecture, algorithms, and leadership.",
+    "targetDate": "2024-12-31",
+    "progress": 25,
+    "status": "active",
+    "category": "personal"
+  },
+  {
+    "id": 7,
+    "employeeId": 4,
+    "title": "Complete Java Spring Certification",
+    "description": "Pass the Spring Professional certification exam and apply knowledge in the notification service project.",
+    "targetDate": "2024-08-31",
+    "progress": 30,
+    "status": "active",
+    "category": "technical"
+  },
+  {
+    "id": 8,
+    "employeeId": 4,
+    "title": "Improve Code Review Skills",
+    "description": "Conduct at least 50 code reviews, focusing on security, performance, and maintainability.",
+    "targetDate": "2024-06-30",
+    "progress": 45,
+    "status": "active",
+    "category": "soft-skill"
+  },
+  {
+    "id": 9,
+    "employeeId": 5,
+    "title": "Launch Open-Source Project",
+    "description": "Create and launch a Vue.js component library on GitHub and npm with at least 100 stars.",
+    "targetDate": "2024-09-30",
+    "progress": 20,
+    "status": "active",
+    "category": "technical"
+  },
+  {
+    "id": 10,
+    "employeeId": 5,
+    "title": "Mentor a New Hire",
+    "description": "Volunteer to onboard and mentor an incoming junior engineer for their first 3 months.",
+    "targetDate": "2024-05-31",
+    "progress": 70,
+    "status": "active",
+    "category": "career"
+  }
+]

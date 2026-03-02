@@ -1,0 +1,134 @@
+[
+  {
+    "id": 1,
+    "employeeId": 2,
+    "title": "Implement OAuth2 Login",
+    "description": "Integrate OAuth2 authentication flow with Google and GitHub providers.",
+    "status": "done",
+    "priority": "high",
+    "dueDate": "2024-02-15",
+    "createdDate": "2024-01-10",
+    "category": "feature"
+  },
+  {
+    "id": 2,
+    "employeeId": 2,
+    "title": "Fix pagination bug on user list",
+    "description": "Users list page skips every 10th record when paginating forward.",
+    "status": "done",
+    "priority": "medium",
+    "dueDate": "2024-02-20",
+    "createdDate": "2024-01-18",
+    "category": "bug"
+  },
+  {
+    "id": 3,
+    "employeeId": 2,
+    "title": "Learn GraphQL fundamentals",
+    "description": "Complete GraphQL course and build a sample schema for the product catalog.",
+    "status": "in-progress",
+    "priority": "medium",
+    "dueDate": "2024-03-30",
+    "createdDate": "2024-02-01",
+    "category": "learning"
+  },
+  {
+    "id": 4,
+    "employeeId": 2,
+    "title": "Write API documentation",
+    "description": "Document all REST endpoints using OpenAPI 3.0 specification.",
+    "status": "todo",
+    "priority": "low",
+    "dueDate": "2024-04-10",
+    "createdDate": "2024-02-05",
+    "category": "documentation"
+  },
+  {
+    "id": 5,
+    "employeeId": 3,
+    "title": "Refactor auth middleware",
+    "description": "Replace legacy session-based auth middleware with JWT validation.",
+    "status": "in-progress",
+    "priority": "high",
+    "dueDate": "2024-03-05",
+    "createdDate": "2024-02-10",
+    "category": "feature"
+  },
+  {
+    "id": 6,
+    "employeeId": 3,
+    "title": "Fix memory leak in websocket handler",
+    "description": "WebSocket connections are not being properly cleaned up on disconnect.",
+    "status": "done",
+    "priority": "high",
+    "dueDate": "2024-02-28",
+    "createdDate": "2024-02-12",
+    "category": "bug"
+  },
+  {
+    "id": 7,
+    "employeeId": 3,
+    "title": "Learn Docker & Kubernetes basics",
+    "description": "Set up local K8s cluster and containerize one microservice.",
+    "status": "todo",
+    "priority": "medium",
+    "dueDate": "2024-04-15",
+    "createdDate": "2024-02-15",
+    "category": "learning"
+  },
+  {
+    "id": 8,
+    "employeeId": 4,
+    "title": "Build notification service",
+    "description": "Create a reusable notification service supporting email, SMS, and push notifications.",
+    "status": "todo",
+    "priority": "high",
+    "dueDate": "2024-04-01",
+    "createdDate": "2024-02-20",
+    "category": "feature"
+  },
+  {
+    "id": 9,
+    "employeeId": 4,
+    "title": "Fix broken unit tests",
+    "description": "Several unit tests in the payment module are failing after the recent refactor.",
+    "status": "in-progress",
+    "priority": "high",
+    "dueDate": "2024-03-10",
+    "createdDate": "2024-02-22",
+    "category": "bug"
+  },
+  {
+    "id": 10,
+    "employeeId": 5,
+    "title": "Implement CSV export feature",
+    "description": "Allow users to export their data in CSV format from the reports page.",
+    "status": "done",
+    "priority": "medium",
+    "dueDate": "2024-02-25",
+    "createdDate": "2024-02-01",
+    "category": "feature"
+  },
+  {
+    "id": 11,
+    "employeeId": 5,
+    "title": "Write unit tests for billing module",
+    "description": "Increase test coverage from 45% to at least 80% for the billing module.",
+    "status": "in-progress",
+    "priority": "medium",
+    "dueDate": "2024-03-20",
+    "createdDate": "2024-02-10",
+    "category": "feature"
+  },
+  {
+    "id": 12,
+    "employeeId": 5,
+    "title": "Research AI code review tools",
+    "description": "Evaluate GitHub Copilot, CodeRabbit, and similar tools for team adoption.",
+    "status": "todo",
+    "priority": "low",
+    "dueDate": "2024-04-30",
+    "createdDate": "2024-02-18",
+    "category": "learning"
+  }
+]
